@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.UUID;
 
 public class HorseRace {
 
@@ -14,7 +13,6 @@ public class HorseRace {
     JLabel msg = new JLabel("");
     static boolean startRaceIsPressed = false;
     static boolean resetRaceIsPressed = false;
-    static int winnerHorse = 0;
     static boolean winner = false;
 
     public static void main(String[] args) {
@@ -29,10 +27,6 @@ public class HorseRace {
     }
 
     public HorseRace() {
-        initialize();
-    }
-
-    private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,26 +75,16 @@ public class HorseRace {
                 msg.setVisible(false);
                 resetRaceIsPressed = false;
                 startRaceIsPressed = true;
-                Horse1 h1 = new Horse1();
+                Horse1 h1 = new Horse1(horse1, msg, frame);
                 h1.start();
-                Horse2 h2 = new Horse2();
+                Horse2 h2 = new Horse2(horse2, msg, frame);
                 h2.start();
-                horse3 h3 = new horse3();
+                Horse3 h3 = new Horse3(horse3, msg, frame);
                 h3.start();
-                horse4 h4 = new horse4();
+                Horse4 h4 = new Horse4(horse4, msg, frame);
                 h4.start();
             }
         }
-    }
-
-    public synchronized void EndRace(int i) {
-        msg.setVisible(true);
-        msg.setText(winnerHorse + " HAS WON THE RACE");
-        msg.setFont(new Font("Calibri", Font.BOLD, 18));
-        if (i == 100) {
-            winner = true;
-        }
-        frame.getContentPane().add(msg);
     }
 
     class ResetRace implements ActionListener {
@@ -110,119 +94,27 @@ public class HorseRace {
                 resetRaceIsPressed = true;
                 startRaceIsPressed = false;
                 winner = false;
-                Horse1 h1 = new Horse1();
+                Horse1 h1 = new Horse1(horse1, msg, frame);
                 h1.reset();
-                Horse2 h2 = new Horse2();
+                Horse2 h2 = new Horse2(horse2, msg, frame);
                 h2.reset();
-                horse3 h3 = new horse3();
+                Horse3 h3 = new Horse3(horse3, msg, frame);
                 h3.reset();
-                horse4 h4 = new horse4();
+                Horse4 h4 = new Horse4(horse4, msg, frame);
                 h4.reset();
             }
         }
     }
 
-    class Horse1 extends Thread {
-        public void reset() {
-            horse1.setValue(0);
-            horse1.repaint();
-        }
+    /*
+    public synchronized void endRace(int i) {
 
-        public void run() {
-            for (int i = 0; i < 101; i++) {
-                if (winner) {
-                    break;
-                }
-                horse1.setValue(i);
-                horse1.repaint();
-                if (i == 100) {
-                    winnerHorse = 1;
-                    EndRace(i);
-                }
-                try {
-                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+        msg.setVisible(true);
+        msg.setText(winnerHorse + " HAS WON THE RACE");
+        msg.setFont(new Font("Calibri", Font.BOLD, 18));
+        if (i == 100) {
+            winner = true;
         }
-    }
-
-    class Horse2 extends Thread {
-        public void reset() {
-            horse2.setValue(0);
-            horse2.repaint();
-        }
-
-        public void run() {
-            for (int i = 0; i < 101; i++) {
-                if (winner) {
-                    break;
-                }
-                horse2.setValue(i);
-                horse2.repaint();
-                if (i == 100) {
-                    winnerHorse = 2;
-                    EndRace(i);
-                }
-                try {
-                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    class horse3 extends Thread {
-        public void reset() {
-            horse3.setValue(0);
-            horse3.repaint();
-        }
-
-        public void run() {
-            for (int i = 0; i < 101; i++) {
-                if (winner) {
-                    break;
-                }
-                horse3.setValue(i);
-                horse3.repaint();
-                if (i == 100) {
-                    winnerHorse = 3;
-                    EndRace(i);
-                }
-                try {
-                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    class horse4 extends Thread {
-        public void reset() {
-            horse4.setValue(0);
-            horse4.repaint();
-        }
-
-        public void run() {
-            for (int i = 0; i < 101; i++) {
-                if (winner) {
-                    break;
-                }
-                horse4.setValue(i);
-                horse4.repaint();
-                if (i == 100) {
-                    winnerHorse = 4;
-                    EndRace(i);
-                }
-                try {
-                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+        frame.getContentPane().add(msg);
+    }*/
 }
