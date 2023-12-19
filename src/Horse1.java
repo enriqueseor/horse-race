@@ -31,9 +31,8 @@ public class Horse1 extends Thread {
             if (i == 100) {
                 synchronized (HorseRace.class) {
                     if (!HorseRace.winner) {
-                        HorseRace.winnerHorse = 1;
                         HorseRace.winner = true;
-                        HorseRace.endRace(i, msg, frame);
+                        HorseRace.endRace(i, 1, msg, frame);
                     }
                 }
                 break;

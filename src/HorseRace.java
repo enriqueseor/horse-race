@@ -87,6 +87,16 @@ public class HorseRace {
         }
     }
 
+    public static synchronized void endRace(int i, int winnerHorse, JLabel msg, JFrame frame) {
+        msg.setVisible(true);
+        msg.setText(winnerHorse + " HAS WON THE RACE");
+        msg.setFont(new Font("Calibri", Font.BOLD, 18));
+        if (i == 100) {
+            winner = true;
+        }
+        frame.getContentPane().add(msg);
+    }
+
     class ResetRace implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (!resetRaceIsPressed) {
@@ -105,16 +115,4 @@ public class HorseRace {
             }
         }
     }
-
-    /*
-    public synchronized void endRace(int i) {
-
-        msg.setVisible(true);
-        msg.setText(winnerHorse + " HAS WON THE RACE");
-        msg.setFont(new Font("Calibri", Font.BOLD, 18));
-        if (i == 100) {
-            winner = true;
-        }
-        frame.getContentPane().add(msg);
-    }*/
 }
