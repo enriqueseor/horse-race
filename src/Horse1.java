@@ -1,14 +1,10 @@
 import javax.swing.*;
-import java.awt.*;
 import java.util.UUID;
 
 public class Horse1 extends Thread {
-
     private final JProgressBar horse1;
     private final JLabel msg;
     private final JFrame frame;
-    static int winnerHorse = 0;
-    static boolean winner = false;
 
     public Horse1(JProgressBar horse1, JLabel msg, JFrame frame) {
         this.horse1 = horse1;
@@ -22,31 +18,26 @@ public class Horse1 extends Thread {
     }
 
     public void run() {
-        for (int i = 0; i < 101; i++) {
-            if (winner) {
-                break;
-            }
+        for (int i = 0; i <= 100; i++) {
             horse1.setValue(i);
             horse1.repaint();
-            if (i == 100) {
-                winnerHorse = 1;
-                endRace(i);
-            }
+
             try {
                 Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            if (i == 100) {
+                synchronized (HorseRace.class) {
+                    if (!HorseRace.winner) {
+                        HorseRace.winnerHorse = 1;
+                        HorseRace.winner = true;
+                        HorseRace.endRace(i, msg, frame);
+                    }
+                }
+                break;
+            }
         }
-    }
-    
-    public synchronized void endRace(int i) {
-        msg.setVisible(true);
-        msg.setText(winnerHorse + " HAS WON THE RACE");
-        msg.setFont(new Font("Calibri", Font.BOLD, 18));
-        if (i == 100) {
-            winner = true;
-        }
-        frame.getContentPane().add(msg);
     }
 }

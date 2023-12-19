@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.util.UUID;
 
 public class Horse4 extends Thread {
@@ -30,7 +29,6 @@ public class Horse4 extends Thread {
             horse4.repaint();
             if (i == 100) {
                 winnerHorse = 4;
-                endRace(i);
             }
             try {
                 Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
@@ -38,15 +36,5 @@ public class Horse4 extends Thread {
                 e.printStackTrace();
             }
         }
-    }
-
-    public synchronized void endRace(int i) {
-        msg.setVisible(true);
-        msg.setText(winnerHorse + " HAS WON THE RACE");
-        msg.setFont(new Font("Calibri", Font.BOLD, 18));
-        if (i == 100) {
-            winner = true;
-        }
-        frame.getContentPane().add(msg);
     }
 }
