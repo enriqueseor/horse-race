@@ -57,13 +57,13 @@ public class HorseRace {
         frame.getContentPane().add(msg);
 
         JButton btnStart = new JButton("START");
-        btnStart.setFont(new Font("Calibri", Font.BOLD, 18));
+        btnStart.setFont(new Font("Arial", Font.BOLD, 18));
         btnStart.addActionListener(new StartRace());
         btnStart.setBounds(150, 300, 125, 40);
         frame.getContentPane().add(btnStart);
 
         JButton btnReset = new JButton("RESET");
-        btnReset.setFont(new Font("Calibri", Font.BOLD, 18));
+        btnReset.setFont(new Font("Arial", Font.BOLD, 18));
         btnReset.addActionListener(new ResetRace());
         btnReset.setBounds(325, 300, 125, 40);
         frame.getContentPane().add(btnReset);
@@ -90,7 +90,7 @@ public class HorseRace {
     public static synchronized void endRace(int i, int winnerHorse, JLabel msg, JFrame frame) {
         msg.setVisible(true);
         msg.setText(winnerHorse + " HAS WON THE RACE");
-        msg.setFont(new Font("Calibri", Font.BOLD, 18));
+        msg.setFont(new Font("Arial", Font.BOLD, 18));
         if (i == 100) {
             winner = true;
         }
