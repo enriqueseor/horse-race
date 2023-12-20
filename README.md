@@ -2,6 +2,8 @@
 
 This Java program simulates a horse race using threads. Each horse is represented as a thread, and they compete to reach the finish line.
 
+![MainScreen](images/MainScreen.png)
+
 ## Table of Contents
 
 - [Features](#features)
