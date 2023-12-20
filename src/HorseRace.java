@@ -2,14 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.UUID;
 
 public class HorseRace {
 
     JFrame frame;
-    JProgressBar horse1 = new JProgressBar(0, 100);
-    JProgressBar horse2 = new JProgressBar(0, 100);
-    JProgressBar horse3 = new JProgressBar(0, 100);
-    JProgressBar horse4 = new JProgressBar(0, 100);
+    JProgressBar[] horses = new JProgressBar[4];
     JLabel msg = new JLabel("");
     static boolean startRaceIsPressed = false;
     static boolean resetRaceIsPressed = false;
@@ -32,25 +30,12 @@ public class HorseRace {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        horse1.setStringPainted(true);
-        horse1.setForeground(Color.BLACK);
-        horse1.setBounds(150, 100, 300, 30);
-        frame.getContentPane().add(horse1);
-
-        horse2.setStringPainted(true);
-        horse2.setForeground(Color.BLUE);
-        horse2.setBounds(150, 150, 300, 30);
-        frame.getContentPane().add(horse2);
-
-        horse3.setStringPainted(true);
-        horse3.setForeground(Color.GRAY);
-        horse3.setBounds(150, 200, 300, 30);
-        frame.getContentPane().add(horse3);
-
-        horse4.setStringPainted(true);
-        horse4.setForeground(Color.RED);
-        horse4.setBounds(150, 250, 300, 30);
-        frame.getContentPane().add(horse4);
+        for (int i = 0; i < horses.length; i++) {
+            horses[i] = new JProgressBar(0, 100);
+            horses[i].setStringPainted(true);
+            horses[i].setBounds(150, 100 + i * 50, 300, 30);
+            frame.getContentPane().add(horses[i]);
+        }
 
         msg.setBounds(150, 50, 300, 30);
         msg.setVisible(false);
@@ -75,14 +60,9 @@ public class HorseRace {
                 msg.setVisible(false);
                 resetRaceIsPressed = false;
                 startRaceIsPressed = true;
-                Horse1 h1 = new Horse1(horse1, msg, frame);
-                h1.start();
-                Horse2 h2 = new Horse2(horse2, msg, frame);
-                h2.start();
-                Horse3 h3 = new Horse3(horse3, msg, frame);
-                h3.start();
-                Horse4 h4 = new Horse4(horse4, msg, frame);
-                h4.start();
+                for (int i = 0; i < horses.length; i++) {
+                    new Horse(horses[i], msg, frame, i + 1).start();
+                }
             }
         }
     }
@@ -104,14 +84,53 @@ public class HorseRace {
                 resetRaceIsPressed = true;
                 startRaceIsPressed = false;
                 winner = false;
-                Horse1 h1 = new Horse1(horse1, msg, frame);
-                h1.reset();
-                Horse2 h2 = new Horse2(horse2, msg, frame);
-                h2.reset();
-                Horse3 h3 = new Horse3(horse3, msg, frame);
-                h3.reset();
-                Horse4 h4 = new Horse4(horse4, msg, frame);
-                h4.reset();
+                for (int i = 0; i < horses.length; i++) {
+                    new Horse(horses[i], msg, frame, i + 1).reset();
+                }
+            }
+        }
+    }
+
+    static class Horse extends Thread {
+
+        private final JProgressBar horse;
+        private final JLabel msg;
+        private final JFrame frame;
+        private final int horseNumber;
+
+        public Horse(JProgressBar horse, JLabel msg, JFrame frame, int horseNumber) {
+            this.horse = horse;
+            this.msg = msg;
+            this.frame = frame;
+            this.horseNumber = horseNumber;
+        }
+
+        public void reset() {
+            horse.setValue(0);
+            horse.repaint();
+        }
+
+        public void run() {
+            for (int i = 0; i <= 100; i++) {
+                horse.setValue(i);
+                horse.repaint();
+
+                try {
+                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                synchronized (HorseRace.class) {
+                    if (HorseRace.winner) {
+                        break;
+                    }
+
+                    if (i == 100) {
+                        HorseRace.winner = true;
+                        HorseRace.endRace(100, horseNumber, msg, frame);
+                    }
+                }
             }
         }
     }
