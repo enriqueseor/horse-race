@@ -28,11 +28,15 @@ public class Horse2 extends Thread {
                 e.printStackTrace();
             }
 
+            if (HorseRace.winner) {
+                break;
+            }
+
             if (i == 100) {
                 synchronized (HorseRace.class) {
                     if (!HorseRace.winner) {
                         HorseRace.winner = true;
-                        HorseRace.endRace(i, 2, msg, frame);
+                        HorseRace.endRace(100, 2, msg, frame);
                     }
                 }
                 break;

@@ -27,11 +27,16 @@ public class Horse3 extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            if (HorseRace.winner) {
+                break;
+            }
+
             if (i == 100) {
                 synchronized (HorseRace.class) {
                     if (!HorseRace.winner) {
                         HorseRace.winner = true;
-                        HorseRace.endRace(i, 3, msg, frame);
+                        HorseRace.endRace(100, 3, msg, frame);
                     }
                 }
                 break;
