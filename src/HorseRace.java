@@ -2,14 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.util.UUID;
 
 public class HorseRace {
 
     JFrame frame;
     JProgressBar[] horses = new JProgressBar[4];
-    Color[] horseColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED};
     JLabel msg = new JLabel("");
+    private Random random = new Random();
     static boolean startRaceIsPressed = false;
     static boolean resetRaceIsPressed = false;
     static boolean winner = false;
@@ -34,7 +35,8 @@ public class HorseRace {
         for (int i = 0; i < horses.length; i++) {
             horses[i] = new JProgressBar(0, 100);
             horses[i].setStringPainted(true);
-            horses[i].setForeground(horseColors[i]);
+            Color randomColor = new Color(random.nextFloat(), random.nextFloat(), random.nextFloat());
+            horses[i].setForeground(randomColor);
             horses[i].setBounds(150, 100 + i * 50, 300, 30);
             frame.getContentPane().add(horses[i]);
         }
