@@ -120,7 +120,7 @@ public class HorseRace {
                 horse.repaint();
 
                 try {
-                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 60);
+                    Thread.sleep(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
